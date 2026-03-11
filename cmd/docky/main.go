@@ -19,6 +19,8 @@ func main() {
 			return
 		}
 		container.Run(os.Args[2:])
+	case "init":
+		container.Init()
 	default:
 		fmt.Println("unknown command")
 	}

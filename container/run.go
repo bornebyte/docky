@@ -8,8 +8,10 @@ import (
 )
 
 func Run(command []string) {
-	fmt.Println("Running container : ", command)
-	cmd := exec.Command(command[0], command[1:]...)
+
+	fmt.Println("Starting container...")
+
+	cmd := exec.Command("/proc/self/exe", append([]string{"init"}, command...)...)
 
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -21,11 +23,8 @@ func Run(command []string) {
 			syscall.CLONE_NEWNS,
 	}
 
-	SetHostname("docky-container")
-
 	err := cmd.Run()
-
 	if err != nil {
-		fmt.Println("error : ", err)
+		fmt.Println("error:", err)
 	}
 }
