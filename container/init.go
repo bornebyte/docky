@@ -11,6 +11,10 @@ func Init() {
 	fmt.Println("Container init process running")
 
 	syscall.Sethostname([]byte("docky-container"))
+
+	syscall.Chroot("./rootfs")
+	os.Chdir("/")
+
 	syscall.Mount("proc", "/proc", "proc", 0, "")
 
 	command := os.Args[2:]
